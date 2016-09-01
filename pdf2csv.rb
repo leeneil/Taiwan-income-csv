@@ -21,7 +21,12 @@ res = RestClient.post(uri,
   :file => File.new(filename))
 
 
-pat = /([\u4e00-\u9fa5]{0,4})[,]?([\u4e00-\u9fa5]{3,}),[,]?(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+.\d+),(\d+.\d+)/
+pat = /([\u4e00-\u9fa5,]{0,8})[,]?([\u4e00-\u9fa5]{3,}),[,]?(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+.\d+),(\d+.\d+)/
+
+
+File.open('rawdata.csv', 'w') do |csv|
+	csv << res
+end
 
 data = res.scan(pat).to_a
 
@@ -32,6 +37,7 @@ new_data = []
 district = ""
 
 for datum in data
+	datum[0] = datum[0].gsub(',', '')
 	if datum[0].size > 0
 		district = datum[0]
 	else 

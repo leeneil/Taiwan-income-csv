@@ -9,7 +9,7 @@ else
 	filename = "output"
 end
 
-pat = /([\u4e00-\u9fa5]{0,4})[,]?([\u4e00-\u9fa5]{3,}),[,]?(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+.\d+),(\d+.\d+)/
+pat = /([\u4e00-\u9fa5,]{0,5})[,]?([\u4e00-\u9fa5]{3,5}),[,]?(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+.\d+),(\d+.\d+)/
 
 data = lines.scan(pat).to_a
 
@@ -20,6 +20,7 @@ new_data = []
 district = ""
 
 for datum in data
+	datum[0] = datum[0].gsub(',', '')
 	if datum[0].size > 0
 		district = datum[0]
 	else 
